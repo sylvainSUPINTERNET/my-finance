@@ -5,7 +5,7 @@ use std::io;
 use std::time;
 use log::{info, warn, debug, error};
 
-mod PollerService;
+mod domain;
 
 async fn index() -> impl Responder {
     info!("Hello sunshine!");
@@ -18,17 +18,10 @@ async fn index() -> impl Responder {
 async fn main() -> io::Result<()> {
     println!("Starting the server at 0.0.0.0:9090");
 
-
-    PollerService::poller("5");
-    
+    domain::PollerService::poller();    
     
 
-    // thread::spawn(move || {
-    //     loop {
-    //         println!("time: {:?}", time::SystemTime::now());
-    //         std::thread::sleep(time::Duration::from_secs(1));
-    //     }
-    // });
+
 
     env::set_var("RUST_LOG", "actix_web=debug,actix_server=debug");
 
