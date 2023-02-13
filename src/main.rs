@@ -5,6 +5,8 @@ use std::io;
 use std::time;
 use log::{info, warn, debug, error};
 
+mod PollerService;
+
 async fn index() -> impl Responder {
     info!("Hello sunshine!");
     debug!("Hello sunshine!");
@@ -16,6 +18,9 @@ async fn index() -> impl Responder {
 async fn main() -> io::Result<()> {
     println!("Starting the server at 0.0.0.0:9090");
 
+
+    PollerService::poller("5");
+    
     
 
     // thread::spawn(move || {

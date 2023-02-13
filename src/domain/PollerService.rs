@@ -1,5 +1,7 @@
 use std::{thread};
 
+pub mod PollerService;
+
 // https://doc.rust-lang.org/rust-by-example/trait/dyn.html
 pub fn poller (start: str) -> Result<(), Box<dyn std::error::Error>> {
     
