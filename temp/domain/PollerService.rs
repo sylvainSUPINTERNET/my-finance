@@ -3,6 +3,8 @@ use std::thread;
 use serde::Deserialize;
 use reqwest::Error;
 
+
+
 // // https://doc.rust-lang.org/rust-by-example/trait/dyn.html
 // pub fn poller (start: str) -> Result<(), Box<dyn std::error::Error>> {
     
