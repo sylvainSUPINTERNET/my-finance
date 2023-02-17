@@ -5,8 +5,8 @@ use std::io;
 use std::time;
 use log::{info, warn, debug, error};
 
+mod domain;
 
-use poll_service;
 
 async fn index() -> impl Responder {
     HttpResponse::Ok().body("Hello sunshine!")
@@ -17,6 +17,8 @@ async fn main() -> io::Result<()> {
     println!("Starting the server at 0.0.0.0:9090");
 
     env::set_var("RUST_LOG", "actix_web=debug,actix_server=debug");
+
+    domain::services::poll_service::poll();
 
     env_logger::init();
     HttpServer::new(|| {
