@@ -1,6 +1,6 @@
 use actix_web::{web,get, App, HttpResponse, HttpServer, Responder};
 use actix_web::middleware;
-use std::{env, thread};
+use std::{env, thread, result};
 use std::io;
 use std::time;
 use log::{info, warn, debug, error};
@@ -18,7 +18,32 @@ async fn main() -> io::Result<()> {
 
     env::set_var("RUST_LOG", "actix_web=debug,actix_server=debug");
 
-    domain::services::poll_service::poll();
+    domain::services::poll_service::poll(5);
+
+
+    let res = 
+        reqwest::get("https://www.alphavantage.co/query?function=EMA&symbol=EWQ&interval=daily&time_period=10&series_type=open&apikey=5580KYOVDAQFS7CJ")
+            .await;
+    
+    match res {
+        Ok(res) => {
+            println!("res: {:?}", res);
+            match res.json::<domain::records::vantage_records::VantageEMA>().await {
+                Ok(text) => {
+                    println!("Symbol: {:?}", text.meta_data.symbol);
+                },
+                Err(err) => {
+                    println!("err: {:?}", err);
+                }
+            }
+        },
+        Err(err) => {
+            println!("err: {:?}", err);
+        }
+    }
+
+
+
 
     env_logger::init();
     HttpServer::new(|| {
