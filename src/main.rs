@@ -18,7 +18,7 @@ async fn main() -> io::Result<()> {
 
     env::set_var("RUST_LOG", "actix_web=debug,actix_server=debug");
 
-    domain::services::poll_service::poll(5);
+    domain::services::poll_service::poll(20);
 
 
     let res = 
