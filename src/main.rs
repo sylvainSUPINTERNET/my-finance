@@ -34,15 +34,8 @@ async fn main() -> io::Result<()> {
                     ;
                     // println!("{}", text.time_series_daily_adjusted.as_object().unwrap().keys().collect::<Vec<_>>()[0]);
                     for (key, value) in text.time_series_daily_adjusted.as_object().unwrap().iter() {
-                        println!("{}: {} - close at ~>", key, value);
-                        match value["close"].as_str() {
-                            Some(close) => {
-                                println!("close ~> {} at {}", close, key);
-                            },
-                            None => {
-                                println!("close: None");
-                            }
-                        }
+                        println!("\x1b[93mError\x1b[0m");
+                        println!("{}: {}", key, value.as_object().unwrap().get("1. open").unwrap());
                     }
                 },
                 Err(err) => {
