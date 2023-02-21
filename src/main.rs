@@ -22,15 +22,28 @@ async fn main() -> io::Result<()> {
 
 
     let res = 
-        reqwest::get("https://www.alphavantage.co/query?function=EMA&symbol=EWQ&interval=daily&time_period=10&series_type=open&apikey=5580KYOVDAQFS7CJ")
+        reqwest::get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=NVDA&apikey=5580KYOVDAQFS7CJ")
             .await;
     
     match res {
         Ok(res) => {
             println!("res: {:?}", res);
-            match res.json::<domain::records::vantage_records::VantageEMA>().await {
+            match res.json::<domain::records::vantage_records::TimeSeriesDailyAdjusted>().await {
                 Ok(text) => {
                     println!("Symbol: {:?}", text.meta_data.symbol);
+                    ;
+                    // println!("{}", text.time_series_daily_adjusted.as_object().unwrap().keys().collect::<Vec<_>>()[0]);
+                    for (key, value) in text.time_series_daily_adjusted.as_object().unwrap().iter() {
+                        println!("{}: {} - close at ~>", key, value);
+                        match value["close"].as_str() {
+                            Some(close) => {
+                                println!("close ~> {} at {}", close, key);
+                            },
+                            None => {
+                                println!("close: None");
+                            }
+                        }
+                    }
                 },
                 Err(err) => {
                     println!("err: {:?}", err);

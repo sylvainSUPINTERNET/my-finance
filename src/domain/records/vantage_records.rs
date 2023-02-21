@@ -20,7 +20,6 @@ pub struct VantageMetadata {
     pub time_period: i32, // 10
 }
 
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct VantageEMA {
 
@@ -31,3 +30,33 @@ pub struct VantageEMA {
     // #[serde(rename = "Technical Analysis: EMA")]
     // technical_analysis_ema:TechnicalAnalysisEMA,
 }
+
+
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TimeSeriesDailyAdjustedMetadata { 
+    #[serde(rename = "1. Information")]
+    pub information: String,
+    #[serde(rename = "2. Symbol")]
+    pub symbol: String,
+    #[serde(rename = "3. Last Refreshed")]
+    pub last_refreshed: String,
+    #[serde(rename = "4. Output Size")]
+    pub output_size: String,
+    #[serde(rename = "5. Time Zone")]
+    pub time_zone: String,
+} 
+
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TimeSeriesDailyAdjusted{ 
+
+    #[serde(rename = "Meta Data")]
+    pub meta_data: TimeSeriesDailyAdjustedMetadata,
+
+    #[serde(rename = "Time Series (Daily)")]
+    pub time_series_daily_adjusted: serde_json::Value,
+
+} 
+
+
