@@ -37,6 +37,7 @@ async fn main() -> io::Result<()> {
                         println!("\x1b[93mError\x1b[0m");
                         println!("{}: {}", key, value.as_object().unwrap().get("1. open").unwrap());
                     }
+                    
                 },
                 Err(err) => {
                     println!("err: {:?}", err);
