@@ -14,10 +14,19 @@ async fn index() -> impl Responder {
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
-    println!("Starting the server at 0.0.0.0:9090");
+    let hostname = "0.0.0.0";
+
+    let args: Vec<String> = env::args().collect();
+    let port = &args[1];
+    let finnHubToken = &args[2];
+    
+    print!("port: {}", port);
+    print!("finnHubToken: {}", finnHubToken);
     
     env_logger::init();
     env::set_var("RUST_LOG", "actix_web=debug,actix_server=debug");
+
+    println!("Starting the server at {}:{}", hostname, port);
 
     domain::services::poll_service::poll(20);
 
@@ -70,7 +79,7 @@ async fn main() -> io::Result<()> {
             // .service(like::plus_one)
             // .service(like::minus_one)
     })
-    .bind("0.0.0.0:9090")?
+    .bind(format!("{}:{}", hostname, port))?
     .run()
     .await
 
